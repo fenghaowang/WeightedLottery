@@ -1,9 +1,11 @@
+package model;
+
 import java.time.LocalDate;
 
 public class Employee
 {
-    String employeeName;
-    LocalDate hireDate;
+    private String employeeName;
+    private LocalDate hireDate;
 
 
     public Employee(String employeeName, LocalDate hireDate) {

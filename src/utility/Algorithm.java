@@ -1,2 +1,6 @@
-package utility;public class Algorithm {
+package utility;
+
+public class Algorithm
+{
+
 }
