@@ -2,15 +2,12 @@ package launcher;
 
 /**
  * @author fenghaow
- * @version 20240611
+ * @version 20240612
  */
 
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -22,7 +19,6 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-
 
 import datahandler.InputLoader;
 import model.Employee;
@@ -37,8 +33,10 @@ public class Launcher
     {
 
         // Global variables
-        String PROGRAM_VERSION = "build 20240611"; // Version number
+        String PROGRAM_VERSION = "build 20240612"; // Version number
         String LOG_FILE_NAME = "RunLog_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss")) + ".log";
+        String inputFileName;
+
 
         // Algorithm runtime clocks
         LocalDateTime algorithmRunStartTime; // Variable to store algorithm start time
@@ -84,9 +82,37 @@ public class Launcher
         logger.log(Level.INFO, "Algorithm started at " + algorithmRunStartTime + "\n");
 
 
+        // Identify the input file
+        if (args.length > 0)
+        {
+            inputFileName = args[0];
+        }
+
+        else
+        {
+            inputFileName = "roster.csv";
+        }
+
+        logger.log(Level.INFO, "Input file target name set to: " + inputFileName);
+
+
+        // Load the input file
+        List<Employee> employees = new ArrayList<>();
+
+        try
+        {
+            employees = InputLoader.rosterReader(inputFileName, logger);
+        }
+
+        catch (Exception e)
+        {
+            logger.log(Level.SEVERE, "Error when loading input file: " + e);
+        }
+
 
         // ********** Main logic implementation **********
-        runOrderGenerator();
+        Algorithm.weightCalculator(employees, logger);
+        Algorithm.runLotteryDraw(employees, logger);
 
 
         // Print algorithm run message
@@ -96,22 +122,6 @@ public class Launcher
         logger.log(Level.INFO, "Algorithm total run time is: " + algorithmRunStartTime.until(algorithmRunEndTime, ChronoUnit.MINUTES) + " minutes.");
 
 
-    }
-
-
-
-
-
-    public static void runOrderGenerator(String fileName, Logger logger)
-    {
-
-        /* Initialize objects */
-        List<Employee> employees = new ArrayList<>();
-
-        /* Read the employee file */
-        employees = datahandler.InputLoader.employeeReader(fileName, logger);
-
-        /* Generate the pick order */
     }
 
 

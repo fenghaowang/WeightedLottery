@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DeskPickOrderGenerator.iml" filepath="$PROJECT_DIR$/DeskPickOrderGenerator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WeightedLottery.iml" filepath="$PROJECT_DIR$/WeightedLottery.iml" />
     </modules>
   </component>
 </project>

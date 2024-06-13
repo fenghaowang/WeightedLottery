@@ -14,7 +14,7 @@ import model.Employee;
 
 public class InputLoader
 {
-    public static List<Employee> employeeReader(String fileName, Logger logger)
+    public static List<Employee> rosterReader(String fileName, Logger logger)
     {
         /**
          * This reader only applies to a comma-separated file (.csv)
@@ -56,6 +56,7 @@ public class InputLoader
             logger.log(Level.SEVERE, "Error reading the input file: " + e);
         }
 
+        logger.log(Level.INFO, employees.size() + " records loaded.");
         return employees;
 
     }
